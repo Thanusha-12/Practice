@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/Thanusha-12/Practice/new.git', branch: 'main'
+                git url: 'https://github.com/Thanusha-12/Practice.git', branch: 'main'
             }
         }
         stage('Build') {
