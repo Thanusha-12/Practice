@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
 
 # Launching the application
 service_obj = Service()
@@ -41,8 +42,7 @@ time.sleep(3)
 driver.find_element(By.XPATH, '//*[@id="savebtn"]').click()
 time.sleep(10)
 home_button = WebDriverWait(driver, 10).until(
-    EC.element_to_be_clickable((By.XPATH, "//a[contains(@class, 'nav-link') and contains(text(), 'Home')]"))
-)
+    EC.element_to_be_clickable((By.XPATH, "//a[contains(@class, 'nav-link') and contains(text(), 'Home')]")))
 home_button.click()
 time.sleep(5)
 
@@ -131,10 +131,11 @@ address.send_keys('23 Main St, Hilton Head Island, SC, USA')
 # zip_code_input = driver.find_element(By.ID,"zipCode")
 # zip_code = "90001 "  # Replace with the actual zip code
 # zip_code_input.send_keys(zip_code)
-select_element = driver.find_element(By.ID,"asceEdition")
-# Create a Select object using the select element
-select = Select(select_element)
-select.select_by_visible_text("ASCE 7-22")
+asce_element = driver.find_element(By.ID, "asceEdition")
+actions = ActionChains(driver)# Use ActionChains to click on the dropdown
+actions.move_to_element(asce_element).click().perform()
+option_to_select = driver.find_element(By.XPATH, "//option[text()='ASCE 7-22']")
+option_to_select.click()
 # select.select_by_value("3")# We can select the value also
 height_input = driver.find_element(By.ID,"buildingHeight")
 building_height = "20"
@@ -173,4 +174,17 @@ try:
     # delete_icon = driver.find_element(By.CSS_SELECTOR, 'a[onclick*="deleteproject"] i.fa-trash')
     # delete_icon.click()
 finally:
-    driver.quit()
+    time.sleep(3)
+view_icon = driver.find_element(By.CSS_SELECTOR, "a[onclick*='viewResults']")
+view_icon.click()
+time.sleep(3)
+# email_button = driver.find_element(By.XPATH, "//button[@onclick='sendEmail()']")
+# email_button.click()
+# time.sleep(3)
+# edit_button = driver.find_element(By.XPATH, "//button[contains(@onclick, 'editProject')]")
+# edit_button.click()
+# time.sleep(3)
+# driver.find_element(By.XPATH, '//*[@id="savebtn"]').click()
+# # print_button = driver.find_element(By.XPATH, "//button[@onclick='printProject()']")
+# # print_button.click()
+# time.sleep(3)
